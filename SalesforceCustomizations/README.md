@@ -2,11 +2,11 @@
 
 When uploading work, please add in the following structure:
 
-> Folder (and any subfolders if it involves multiple components)
+> Folder (Customization name)
   
   >> README.md (with instructions and notes)
   
-  >> Components (Lightning Component, etc.)
+  >> Component Folders (If there are multiple Components)
   
    >>> Individual Files (Apex code, VF Pages, etc.)
   
