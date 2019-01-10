@@ -8,7 +8,7 @@ When uploading work, please add in the following structure:
   
   >> Components (Lightning Component, etc.)
   
-    >>> Individual Files (Apex code, VF Pages, etc.)
+   >>> Individual Files (Apex code, VF Pages, etc.)
   
   
   
