@@ -1,0 +1,5 @@
+trigger CollaborateVersionUponCreate on tinderbox__Document__c (before insert) {
+	for (tinderbox__Document__c newDocument : Trigger.new) {
+        CollaborateVersionUponCreate.createVersion(newDocument.tinderbox__TinderBoxId__c);
+    }
+}
