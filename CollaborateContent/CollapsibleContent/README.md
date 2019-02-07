@@ -6,7 +6,6 @@ Each section that you're expanding or collapsing needs to have the following str
 
 input with id="WHATEVER UNIQUE ID YOU CHOOSE FOR EACH SECTION"
 and for="THAT SAME UNIQUE ID"
- > \<div class="wrap-collabsible"><input id="AI-Partners" class="toggle" type="checkbox" /><label class="lbl-toggle" for="AI-Partners">More Info</label>
   
   >>   <div class="wrap-collabsible"><input id="AI-Partners" class="toggle" type="checkbox" /><label class="lbl-toggle" for="AI-Partners">More Info</label>
         <div class="collapsible-content">
