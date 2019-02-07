@@ -1,6 +1,6 @@
 # Collapsible Content
 
-For a super-style document, you may want to help clean up the view of a page by hiding details in a collapsible/expandable area of conten.
+For a super-style document, you may want to help clean up the view of a page by hiding details in a collapsible/expandable area of content.
 
 Each section that you're expanding or collapsing needs to have the following structure:
 
