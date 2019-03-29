@@ -1,0 +1,7 @@
+trigger CollaborateSyncQuote on tinderbox__Document__c (before update) {
+	for (tinderbox__Document__c updatedDocument : Trigger.new) {
+        if (updatedDocument.tinderbox__Status__c == 'Accepted' && updatedDocument.tinderbox__Template_Name__c == 'Opportunity with Multiple CPQ Quotes Template') {
+            CollaborateSyncQuote.syncQuote(updatedDocument.tinderbox__TinderBoxId__c);
+        }
+    }
+}
