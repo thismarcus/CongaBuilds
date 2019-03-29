@@ -1,0 +1,84 @@
+public class CollaborateSyncQuote {
+    @future (callout=true)
+    public static void syncQuote(String document_id){
+
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        tinderbox__TinderBox__c cs = tinderbox__TinderBox__c.getOrgDefaults();
+        String api_key = 'f1e2ae706ddb429257cfddc2c389b10263bd8540';
+
+        // Make sure you also create Remote Site Setting in Salesforce
+
+        request.setEndpoint('https://' + cs.tinderbox__Company_URL__c + '/api/v2/proposals/' + document_id + '/pages?api_key=' + api_key);
+        request.setMethod('GET');
+        request.setHeader('Content-Type', 'Application/JSON');
+        request.setHeader('Accept', 'Application/JSON');
+        HttpResponse response = http.send(request);
+
+        // Get the body of response
+        String body = response.getBody();
+        // System.debug(body);
+
+        // Use the classes defined at the bottom of this file to make a usable list
+        List<responseResource> pageResponses = (List<responseResource>)JSON.deserialize(body,List<responseResource>.class);
+        // System.debug(pageResponses);
+
+        // Loop through your pages, determine if they are marked "accepted", get info about its repeated object, and then update that object
+        for (responseResource i : pageResponses) {
+          if (i.page.status == 1) {
+            String objectType = i.page.metadata.referenceObject;
+            String recordId = i.page.metadata.id;
+
+            // System.debug(i.page.name);
+            // System.debug(objectType);
+            // System.debug(recordId);
+
+            // Make sure it's a Quote object
+            if (objectType == 'SBQQ__Quotes2__r') {
+              // Find the Quote to update (you can swap these objects)
+              SBQQ__Quote__c quoteToUpdate = [SELECT Id, SBQQ__Status__c, SBQQ__Primary__c, SBQQ__Opportunity2__c FROM SBQQ__Quote__c WHERE Id =: recordId];
+              // System.debug(quoteToUpdate.SBQQ__Status__c);
+              quoteToUpdate.SBQQ__Status__c = 'Accepted';
+              quoteToUpdate.SBQQ__Primary__c = true;
+              update quoteToUpdate;
+              
+              // This update configuration assumes it's really just one record you want to update. 
+              // If you're building something more robust where you need to update multiple rcords (like a document where a recipient picks n chooses products) 
+              // In that case, I would instead recommend creating a collection of objects to update (from the loop), 
+              // Then, update the collection in SFDC in one call at the end of the class.
+
+              // // Not using these - we'll handle auto-updating the Oppty from processes within Salesforce based on Quote acceptance (better handle product syncing)
+              // Opportunity opptyToUpdate = [SELECT Id, StageName FROM Opportunity WHERE Id =: quoteToUpdate.SBQQ__Opportunity2__c];
+              // opptyToUpdate.StageName = 'Closed Won';
+              // update opptyToUpdate;
+            }
+          }
+        }
+
+        if (response.getStatusCode() != 201) {
+            System.debug('The status code returned was not expected: ' +
+                response.getStatusCode() + ' ' + response.getStatus());
+        } else {
+            System.debug(response.getBody());
+        }
+
+    }
+
+
+    // Define classes for making a usable list of pages from the Collaborate document
+    public class responseResource {
+        public pageResource page {get;set;}
+    }
+
+    public class pageResource {
+        public String id {get;set;}
+        public String name {get;set;}
+        public integer status {get;set;}
+        public metadataResource metadata {get;set;}
+    }
+
+    public class metadataResource {
+        public String referenceObject {get;set;}
+        Public String id {get;set;}
+    }
+}
