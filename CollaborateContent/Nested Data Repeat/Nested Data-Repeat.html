@@ -1,0 +1,30 @@
+<!-- This HTML represent a generic version of the correct syntax. Field and Object names will need to be modified to fit the use case. -->
+
+<div data-repeat="family in QuoteLines__r" data-group-by="Family__c">
+  <h1>[family.Family__c]</h1>
+  <div data-repeat="subfamily in QuoteLines__r" data-group-by="SubFamily__c" data-filter="Family__c = family.Family__c">
+    <h2>[subfamily.SubFamily__c]</h2>
+    <table style="width: 100%" data-source="QuoteLines__r" data-filter="SubFamily__c = subfamily.SubFamily__c">
+      <thead>
+        <tr>
+          <th style="width: 50%;">Name</th>
+          <th style="width: 50%;">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>[Product__r.Name]</td>
+          <td>[TotalPrice]</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>[subfamily.SubFamily__c] Subtotal: </td>
+          <td>[SUM(TotalPrice)]</td>
+        </tr>
+      </tfoot>
+    </table>
+  <!-- End of subfamily group -->
+  </div>
+<!-- End of family group -->
+</div>
