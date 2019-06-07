@@ -1,5 +1,7 @@
 # Cool API Recipes or web apps using Collaborate
 
+*I didn't really have time to add anything here, but hopefully somebody does at some point!
+
 When uploading work, please add in the following structure:
 
 > Folder (Recipe/app name)
