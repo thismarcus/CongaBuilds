@@ -5,7 +5,7 @@ public class CollaborateSyncQuote {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         tinderbox__TinderBox__c cs = tinderbox__TinderBox__c.getOrgDefaults();
-        String api_key = 'f1e2ae706ddb429257cfddc2c389b10263bd8540';
+        String api_key = 'xxx2ae706ddb429257cfddc2c389b10263bd8540';
 
         // Make sure you also create Remote Site Setting in Salesforce
 
